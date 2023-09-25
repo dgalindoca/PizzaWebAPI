@@ -32,7 +32,7 @@ namespace PizzaWebAPI.Controllers
             }
         }
 
-        [HttpGet("{id]")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCourier(int id)
         {
             try
@@ -47,7 +47,7 @@ namespace PizzaWebAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Available")]
         public async Task<IActionResult> GetAvailableCouriers()
         {
             try
