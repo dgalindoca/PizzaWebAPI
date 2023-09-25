@@ -13,8 +13,8 @@ namespace PizzaWebAPI.Models
         public double TotalPrice { get; set; }
         public int OrderStatus { get; set; }
         public string? OrderComments { get; set; }
-        public string PaymentMethod { get; set; } = String.Empty;
-        public string PaymentStatus { get; set; } = String.Empty;
+        public int PaymentMethod { get; set; }
+        public int PaymentStatus { get; set; }
         public int CourierId { get; set; }
 
     }

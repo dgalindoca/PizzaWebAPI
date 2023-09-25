@@ -10,7 +10,7 @@ namespace PizzaWebAPI.Models
         public int Id { get; set; }
         public int PizzaId { get; set; }
         public int OrderId { get; set; }
-        public int AmountOfPizzas { get; set; }
+        public int NumberOfPizzas { get; set; }
         public double Price { get; set; }
     }
 }

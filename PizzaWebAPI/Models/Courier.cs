@@ -12,6 +12,6 @@ namespace PizzaWebAPI.Models
         public string Deliveries { get; set; } = string.Empty;
         public double Rating { get; set; }
         public string Phone { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
+        public int Status { get; set; }
     }
 }

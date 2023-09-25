@@ -45,9 +45,8 @@ namespace PizzaWebAPI.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -74,13 +73,11 @@ namespace PizzaWebAPI.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("integer");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("double precision");
@@ -112,9 +109,8 @@ namespace PizzaWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PizzaSize")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PizzaSize")
+                        .HasColumnType("integer");
 
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
@@ -135,7 +131,7 @@ namespace PizzaWebAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AmountOfPizzas")
+                    b.Property<int>("NumberOfPizzas")
                         .HasColumnType("integer");
 
                     b.Property<int>("OrderId")

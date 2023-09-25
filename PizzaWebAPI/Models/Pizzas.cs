@@ -10,7 +10,7 @@ namespace PizzaWebAPI.Models
         public string PizzaName { get; set; } = string.Empty;
         public string PizzaDescription { get; set; } = string.Empty;
         public string? ImageUrl { get; set; }
-        public string PizzaSize { get; set; } = string.Empty;
+        public int PizzaSize { get; set; }
         public double Price { get; set; }
         public int Stock { get; set; }
     }

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PizzaWebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class firstmigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace PizzaWebAPI.Migrations
                     Deliveries = table.Column<string>(type: "text", nullable: false),
                     Rating = table.Column<double>(type: "double precision", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false)
+                    Status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,8 @@ namespace PizzaWebAPI.Migrations
                     TotalPrice = table.Column<double>(type: "double precision", nullable: false),
                     OrderStatus = table.Column<int>(type: "integer", nullable: false),
                     OrderComments = table.Column<string>(type: "text", nullable: true),
-                    PaymentMethod = table.Column<string>(type: "text", nullable: false),
-                    PaymentStatus = table.Column<string>(type: "text", nullable: false),
+                    PaymentMethod = table.Column<int>(type: "integer", nullable: false),
+                    PaymentStatus = table.Column<int>(type: "integer", nullable: false),
                     CourierId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -58,7 +58,7 @@ namespace PizzaWebAPI.Migrations
                     PizzaName = table.Column<string>(type: "text", nullable: false),
                     PizzaDescription = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
-                    PizzaSize = table.Column<string>(type: "text", nullable: false),
+                    PizzaSize = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false),
                     Stock = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -75,7 +75,7 @@ namespace PizzaWebAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PizzaId = table.Column<int>(type: "integer", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: false),
-                    AmountOfPizzas = table.Column<int>(type: "integer", nullable: false),
+                    NumberOfPizzas = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
