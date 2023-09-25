@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PizzaWebAPI.Core.Constants;
 using PizzaWebAPI.Models;
 using PizzaWebAPI.Services;
 
@@ -21,7 +22,7 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                List<Pizzas> pizzas = await _pizzasService.GetAllPizzas();
+                List<Pizzas> pizzas = await _pizzasService.GetAllPizzasAsync();
                 if (pizzas == null || pizzas.Count == 0) { return BadRequest("No pizzas found"); }
                 return Ok(pizzas);
             }catch (Exception ex)
@@ -35,7 +36,7 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                Pizzas pizza = await _pizzasService.GetPizza(id);
+                Pizzas pizza = await _pizzasService.GetPizzaAsync(id);
                 if (pizza == null) { return BadRequest("Pizza not found"); }
                 return Ok(pizza);
             }catch(Exception ex)
@@ -49,8 +50,9 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                await _pizzasService.CreatePizza(pizza);
-                return Ok(await _pizzasService.GetAllPizzas());
+                if (!Enum.IsDefined(typeof(PizzasSizes), pizza.PizzaSize)) { return BadRequest("The size of the pizza is not valid"); }
+                await _pizzasService.CreatePizzaAsync(pizza);
+                return Ok(await _pizzasService.GetAllPizzasAsync());
             }catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -62,7 +64,7 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                Pizzas pizza = await _pizzasService.GetPizza(id);
+                Pizzas pizza = await _pizzasService.GetPizzaAsync(id);
                 if (pizza == null) { return BadRequest("Pizza not found"); }
 
                 pizza.PizzaName = request.PizzaName;
@@ -72,9 +74,9 @@ namespace PizzaWebAPI.Controllers
                 pizza.Price = request.Price;
                 pizza.Stock = request.Stock;
 
-                await _pizzasService.SavePizza();
+                await _pizzasService.SavePizzaAsync();
 
-                return Ok(await _pizzasService.GetAllPizzas());
+                return Ok(await _pizzasService.GetAllPizzasAsync());
             }
             catch (Exception ex)
             {
@@ -87,10 +89,11 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                Pizzas pizza = await _pizzasService.GetPizza(id);
+                Pizzas pizza = await _pizzasService.GetPizzaAsync(id);
                 if (pizza == null) { return BadRequest("Pizza not found"); }
-                await _pizzasService.DeletePizza(pizza);
-                return Ok(await _pizzasService.GetAllPizzas());
+
+                await _pizzasService.DeletePizzaAsync(pizza);
+                return Ok(await _pizzasService.GetAllPizzasAsync());
             }
             catch (Exception ex)
             {

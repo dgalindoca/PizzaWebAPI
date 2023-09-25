@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PizzaWebAPI.Models;
+﻿using PizzaWebAPI.Models;
 
 namespace PizzaWebAPI.Services
 {
@@ -13,29 +11,29 @@ namespace PizzaWebAPI.Services
             _pizzaDB = pizzaDB;
         }
 
-        public async Task<List<Pizzas>> GetAllPizzas()
+        public async Task<List<Pizzas>> GetAllPizzasAsync()
         {
             return await _pizzaDB.Pizzas.ToListAsync();
         }
 
-        public async Task<Pizzas> GetPizza(int id)
+        public async Task<Pizzas> GetPizzaAsync(int id)
         {
             return await _pizzaDB.Pizzas.FindAsync(id);
         }
 
 
-        public async Task CreatePizza(Pizzas pizza)
+        public async Task CreatePizzaAsync(Pizzas pizza)
         {
             _pizzaDB.Pizzas.Add(pizza);
             await _pizzaDB.SaveChangesAsync();
         }
 
-        public async Task SavePizza()
+        public async Task SavePizzaAsync()
         {
             await _pizzaDB.SaveChangesAsync();
         }
 
-        public async Task DeletePizza(Pizzas pizza)
+        public async Task DeletePizzaAsync(Pizzas pizza)
         {
             _pizzaDB.Pizzas.Remove(pizza);
             await _pizzaDB.SaveChangesAsync();
