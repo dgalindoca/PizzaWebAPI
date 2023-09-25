@@ -16,6 +16,8 @@ builder.Services.AddDbContext<PizzaDB>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<PizzaWebAPI.Services.PizzasService>();
+builder.Services.AddScoped<PizzaWebAPI.Services.CourierService>();
+
 
 var app = builder.Build();
 
