@@ -61,6 +61,15 @@ namespace PizzaWebAPI.Services
             }
         }
 
+        public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return computedHash.SequenceEqual(passwordHash);
+            }
+        }
+
         public bool IsValidEmail(string email)
         {
             // Define the regular expression pattern for a valid email
@@ -71,15 +80,6 @@ namespace PizzaWebAPI.Services
 
             // Use the IsMatch method to check if the email matches the pattern
             return regex.IsMatch(email);
-        }
-
-        public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
         }
 
         public string CreateToken(Users users)

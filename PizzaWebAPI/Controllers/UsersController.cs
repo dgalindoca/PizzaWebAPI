@@ -61,7 +61,7 @@ namespace PizzaWebAPI.Controllers
                 }); }
 
                 Users user = new();
-                _usersServices.CreatePasswordHash(request.Password, out byte[] passwordSalt, out byte[] passwordHash);
+                _usersServices.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
                 user.FirstName = request.FirstName;
                 user.LastName = request.LastName;
@@ -114,6 +114,27 @@ namespace PizzaWebAPI.Controllers
             {
                 return StatusCode(500, new
                 {
+                    error = ex.Message
+                });
+            }
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                Users? user = await _usersServices.GetUserAsync(id);
+                if (user == null) { return BadRequest(new { error = "No user found" }); }
+
+                await _usersServices.DeleteUserAsync(user);
+                return Ok(await _usersServices.GetAllUsersAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new 
+                { 
                     error = ex.Message
                 });
             }
