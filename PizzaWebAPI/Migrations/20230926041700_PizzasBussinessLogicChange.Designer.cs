@@ -12,8 +12,8 @@ using PizzaWebAPI.Data;
 namespace PizzaWebAPI.Migrations
 {
     [DbContext(typeof(PizzaDB))]
-    [Migration("20230924212301_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230926041700_PizzasBussinessLogicChange")]
+    partial class PizzasBussinessLogicChange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace PizzaWebAPI.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PizzaDescription")
                         .IsRequired()
                         .HasColumnType("text");
@@ -112,14 +115,8 @@ namespace PizzaWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PizzaSize")
-                        .HasColumnType("integer");
-
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -175,11 +172,15 @@ namespace PizzaWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserPassword")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

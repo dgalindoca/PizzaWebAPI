@@ -92,7 +92,8 @@ namespace PizzaWebAPI.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    UserPassword = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     DeliveryAdress = table.Column<string>(type: "text", nullable: false)
                 },

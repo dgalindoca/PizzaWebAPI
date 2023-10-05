@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PizzaWebAPI.Data;
@@ -11,9 +12,11 @@ using PizzaWebAPI.Data;
 namespace PizzaWebAPI.Migrations
 {
     [DbContext(typeof(PizzaDB))]
-    partial class PizzaDBModelSnapshot : ModelSnapshot
+    [Migration("20230926040723_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,9 +104,6 @@ namespace PizzaWebAPI.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("PizzaDescription")
                         .IsRequired()
                         .HasColumnType("text");
@@ -112,8 +112,14 @@ namespace PizzaWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PizzaSize")
+                        .HasColumnType("integer");
+
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

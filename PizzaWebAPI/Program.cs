@@ -17,6 +17,8 @@ builder.Services.AddDbContext<PizzaDB>(options =>
 
 builder.Services.AddScoped<PizzaWebAPI.Services.PizzasService>();
 builder.Services.AddScoped<PizzaWebAPI.Services.CourierService>();
+builder.Services.AddScoped<PizzaWebAPI.Services.UsersServices>();
+
 
 
 var app = builder.Build();
