@@ -21,7 +21,13 @@ namespace PizzaWebAPI.Services
             return await _pizzaDB.Pizzas.FindAsync(id);
         }
 
-
+        public async Task<List<Pizzas>> GetAvailablePizzasAsync()
+        {
+            var pizzas = (from p in _pizzaDB.Pizzas
+                          where p.IsAvailable == true
+                          select p).ToListAsync();
+            return await pizzas;
+        }
         public async Task CreatePizzaAsync(Pizzas pizza)
         {
             _pizzaDB.Pizzas.Add(pizza);

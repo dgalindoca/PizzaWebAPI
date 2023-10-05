@@ -23,7 +23,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 List<Courier> couriers = await _courierService.GetAllCouriersAsync();
-                if (couriers == null || couriers.Count == 0) { return BadRequest("No couriers found"); }
+                if (couriers == null || couriers.Count == 0) { return BadRequest( new
+                {
+                    error = "No couriers found"
+                }); }
                 return Ok(couriers);
             }
             catch (Exception ex)
@@ -38,8 +41,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 Courier courier = await _courierService.GetCourierAsync(id);
-                if (courier == null) { return BadRequest("Courier not found"); }
-                return Ok(courier);
+                return courier == null ? BadRequest(new
+                {
+                    error = "Courier not found"
+                }) : Ok(courier);
             }
             catch (Exception ex)
             {
@@ -53,8 +58,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 List<Courier> couriers = await _courierService.GetAvailableCouriersAsync();
-                if (couriers == null || couriers.Count == 0) { return BadRequest("There are no available couriers"); }
-                return Ok(couriers);
+                return couriers == null || couriers.Count == 0 ? BadRequest( new
+                {
+                    error = "There are no available couriers"
+                }) : Ok(couriers);
             }
             catch (Exception ex)
             {
@@ -67,7 +74,10 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                if (!Enum.IsDefined(typeof(CourierStatus), courier.Status)) { return BadRequest("The status of the courier is not valid"); }
+                if (!Enum.IsDefined(typeof(CourierStatus), courier.Status)) { return BadRequest( new
+                {
+                    error = "The status of the courier is not valid"
+                }); }
                 await _courierService.CreateCourierAsync(courier);
                 return Ok(await _courierService.GetAllCouriersAsync());
             }
@@ -83,7 +93,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 Courier courier = await _courierService.GetCourierAsync(id);
-                if (courier == null) { return BadRequest("Courier not found"); }
+                if (courier == null) { return BadRequest(new
+                {
+                    error = "Courier not found"
+                }); }
 
                 courier.CourierName = request.CourierName;
                 courier.Deliveries = request.Deliveries;
@@ -106,7 +119,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 Courier courier = await _courierService.GetCourierAsync(id);
-                if (courier == null) { return BadRequest("Courier not found"); }
+                if (courier == null) { return BadRequest(new
+                {
+                    error = "Courier not found"
+                }); }
 
                 await _courierService.DeleteCourierAsync(courier);
                 return Ok(await _courierService.GetAllCouriersAsync());

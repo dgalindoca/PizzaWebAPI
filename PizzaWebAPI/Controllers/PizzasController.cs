@@ -23,8 +23,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 List<Pizzas> pizzas = await _pizzasService.GetAllPizzasAsync();
-                if (pizzas == null || pizzas.Count == 0) { return BadRequest("No pizzas found"); }
-                return Ok(pizzas);
+                return pizzas == null || pizzas.Count == 0 ? BadRequest( new 
+                { 
+                    error = "No pizzas found" 
+                }) : Ok(pizzas);
             }catch (Exception ex)
             {
                 return StatusCode(500, new { ex.Message });
@@ -37,11 +39,30 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 Pizzas pizza = await _pizzasService.GetPizzaAsync(id);
-                if (pizza == null) { return BadRequest("Pizza not found"); }
-                return Ok(pizza);
+                return pizza == null ? BadRequest( new
+                {
+                    error = "Pizza not found"
+                }) : Ok(pizza);
             }catch(Exception ex)
             {
                 return StatusCode(500, new { ex.Message });
+            }
+        }
+
+        [HttpGet("Available")]
+        public async Task<IActionResult> GetAvailablePizzas()
+        {
+            try
+            {
+                List<Pizzas> pizzas = await _pizzasService.GetAvailablePizzasAsync();
+                return pizzas == null || pizzas.Count == 0 ? BadRequest(new
+                {
+                    error = "No Available pizzas found"
+                }) : Ok(pizzas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ex.Message} );
             }
         }
 
@@ -50,7 +71,7 @@ namespace PizzaWebAPI.Controllers
         {
             try
             {
-                if (!Enum.IsDefined(typeof(PizzasSizes), pizza.PizzaSize)) { return BadRequest("The size of the pizza is not valid"); }
+                //if (!Enum.IsDefined(typeof(PizzasSizes), pizza.PizzaSize)) { return BadRequest("The size of the pizza is not valid"); }
                 await _pizzasService.CreatePizzaAsync(pizza);
                 return Ok(await _pizzasService.GetAllPizzasAsync());
             }catch (Exception ex)
@@ -65,14 +86,18 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 Pizzas pizza = await _pizzasService.GetPizzaAsync(id);
-                if (pizza == null) { return BadRequest("Pizza not found"); }
+                if (pizza == null) { return BadRequest( new
+                {
+                    error = "Pizza not found"
+                }); }
 
+                //if (!Enum.IsDefined(typeof(PizzasSizes), pizza.PizzaSize)) { return BadRequest("The size of the pizza is not valid"); }
                 pizza.PizzaName = request.PizzaName;
                 pizza.PizzaDescription = request.PizzaDescription;
                 pizza.ImageUrl = request.ImageUrl;
-                pizza.PizzaSize = request.PizzaSize;
+                //pizza.PizzaSize = request.PizzaSize;
                 pizza.Price = request.Price;
-                pizza.Stock = request.Stock;
+                pizza.IsAvailable = request.IsAvailable;
 
                 await _pizzasService.SavePizzaAsync();
 
@@ -90,7 +115,10 @@ namespace PizzaWebAPI.Controllers
             try
             {
                 Pizzas pizza = await _pizzasService.GetPizzaAsync(id);
-                if (pizza == null) { return BadRequest("Pizza not found"); }
+                if (pizza == null) { return BadRequest( new
+                {
+                    error = "Pizza not found"
+                }); }
 
                 await _pizzasService.DeletePizzaAsync(pizza);
                 return Ok(await _pizzasService.GetAllPizzasAsync());
