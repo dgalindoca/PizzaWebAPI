@@ -1,5 +1,7 @@
 # PizzaWebAPI
-Back-end API for a pizza delivery web app
+Back-end API for a pizza delivery web app.
+This includes features related to Pizzas management, Orders, Users and Delivery.
+Uses .NET 6.0, Entity Framework for connecting to a PostgreSQL DataBase and implements JWT for authentication and authorization.
 
 # Setting environment variables and user secrets:
 
